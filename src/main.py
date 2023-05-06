@@ -1,4 +1,4 @@
-
+from colorama import Fore
 
 todo_list = {}
 
@@ -9,9 +9,10 @@ no_tasks = False
 
 def view_tasks():
     print('Number of tasks: ' + str(len(todo_list)))
-    print('Number of finished tasks: ' + str(len(finished_tasks)))
-    print('Number of unfinished tasks: ' + str(len(not_finished_tasks)))
+    print(Fore.GREEN + 'Number of finished tasks: ' + str(len(finished_tasks)))
+    print(Fore.RED + 'Number of unfinished tasks: ' + str(len(not_finished_tasks)))
     print('** [TASKS] **')
+    print(Fore.RESET)
     print(f'Unfinished tasks: {not_finished_tasks}')
     print(f'Finished tasks: {finished_tasks}')
 
@@ -21,4 +22,21 @@ def view_tasks():
         elif todo_list[i] == '[X]':
             print(str(n + 1) + ') ' + todo_list[i] + ' ' + i)
     print('\n')
+
+def new_task():
+    print('** NEW TASK **')
+    while True:
+        while True:
+            new_task_name = input('Add new task or back to menu(q): ')
+            if new_task_name.lower() in todo_list:
+                print('This name already in use!')
+                pass
+            elif new_task_name == 'q':
+                return
+            else:
+                break
+
+        todo_list[new_task_name.lower()] = '[X]'
+        print('New task added to list!')
+        not_finished_tasks.append(new_task_name.lower())
 
