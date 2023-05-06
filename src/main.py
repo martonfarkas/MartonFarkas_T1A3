@@ -1,3 +1,5 @@
+
+
 todo_list = {}
 
 finished_tasks = []
@@ -12,3 +14,11 @@ def view_tasks():
     print('** [TASKS] **')
     print(f'Unfinished tasks: {not_finished_tasks}')
     print(f'Finished tasks: {finished_tasks}')
+
+    for n, i in enumerate(todo_list):
+        if todo_list[i] == '[\u2713]':
+            print(str(n + 1) + ') ' + todo_list[i] + ' ' + i)
+        elif todo_list[i] == '[X]':
+            print(str(n + 1) + ') ' + todo_list[i] + ' ' + i)
+    print('\n')
+
