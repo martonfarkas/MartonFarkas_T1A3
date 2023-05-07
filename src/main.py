@@ -40,3 +40,19 @@ def new_task():
         print('New task added to list!')
         not_finished_tasks.append(new_task_name.lower())
 
+def remove_task():
+    print('** REMOVE TASK **')
+    view_tasks()
+    if len(todo_list) == 0:
+        print('There is no task to remove')
+    while True:
+        while True:
+            remove_task_name = input('Which task would you like to remove? or back to menu(q): ')
+            if remove_task_name == 'q':
+                pass
+            elif remove_task_name in todo_list:
+                del todo_list[remove_task_name]
+                print('Task removed')
+            else:
+                print("Can't find this task. Did you typed correctly?")
+                pass
