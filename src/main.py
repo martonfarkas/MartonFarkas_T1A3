@@ -1,4 +1,5 @@
 from colorama import Fore
+from datetime import date
 
 todo_list = {}
 
@@ -61,3 +62,15 @@ def remove_task():
             else:
                 print("Can't find this task. Did you typed correctly?")
                 pass
+
+def finished_task():
+    print('** FINISHED TASK **')
+    view_tasks()
+    while True:
+        while True:
+            if len(todo_list) == 0:
+                print('You have no task')
+                no_tasks = True
+                break
+            else:
+                no_tasks = False
