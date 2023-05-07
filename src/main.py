@@ -84,3 +84,14 @@ def finished_task():
             else:
                 print("Can't find it. Check correct task name")
                 pass
+
+        if no_tasks == False:
+            try:
+                todo_list[task_to_finish] = '[\u2713]'
+                not_finished_tasks.remove(task_to_finish)
+                finished_tasks.append(task_to_finish)
+                print('Task finished!')
+            except:
+                print('This task already finished!')
+        else:
+            pass
