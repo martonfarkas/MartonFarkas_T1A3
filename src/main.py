@@ -74,3 +74,13 @@ def finished_task():
                 break
             else:
                 no_tasks = False
+
+            task_to_finish = input('Which task have you finished? or back to menu(q): ')
+
+            if task_to_finish in todo_list:
+                break
+            elif task_to_finish == 'q':
+                pass
+            else:
+                print("Can't find it. Check correct task name")
+                pass
