@@ -53,6 +53,11 @@ def remove_task():
             elif remove_task_name in todo_list:
                 del todo_list[remove_task_name]
                 print('Task removed')
+                try:
+                    finished_tasks.remove(remove_task_name)
+                except:
+                    not_finished_tasks.remove(remove_task_name)
+                break
             else:
                 print("Can't find this task. Did you typed correctly?")
                 pass
