@@ -1,6 +1,7 @@
 from colorama import Fore
 from tabulate import tabulate
 import csv
+import os
 from datetime import date
 
 todo_list = {}
@@ -25,6 +26,10 @@ def view_tasks():
         elif todo_list[i] == '[X]':
             print(str(n + 1) + ') ' + todo_list[i] + ' ' + i)
     print('\n')
+
+    with open('tasks.csv', 'w') as f:
+        for task in todo_list:
+            f.write(task + ',' + todo_list[task] + '\n')
 
     tasks = []
     for task, status in todo_list.items():
