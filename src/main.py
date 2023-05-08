@@ -75,6 +75,7 @@ def finished_task():
         while True:
             if len(todo_list) == 0:
                 print('You have no task')
+                menu()
                 no_tasks = True
                 break
             else:
@@ -109,6 +110,7 @@ def not_finished_task():
         while True:
             if len(todo_list) == 0:
                 print('You have no task')
+                menu()
                 no_task = True
                 break
             else:
@@ -137,13 +139,7 @@ def not_finished_task():
 
 def menu():
     view_tasks()
-    print('''
-        (1) Add Task
-        (2) Remove Task
-        (3) Finished Task
-        (4) Un-finished Task
-        (5) Exit
-        ''')
+    print('\n', Fore.BLUE + '(1) Add Task\n', Fore.RED + '(2) Remove Task\n', Fore.GREEN + '(3) Finished Task\n', Fore.YELLOW + '(4) Un-finished Task\n', Fore.RESET + '(5) Exit\n')
 
     menu_choice = input('')
     if menu_choice == '1':
