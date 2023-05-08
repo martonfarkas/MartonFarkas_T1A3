@@ -128,3 +128,27 @@ def not_finished_task():
                 print('You already uncompleted this task!')
         else:
             pass
+
+def menu():
+    view_tasks()
+    print('''
+        (1) Add Task
+        (2) Remove Task
+        (3) Finished Task
+        (4) Un-finished Task
+        (5) Exit
+        ''')
+
+    menu_choice = input('')
+    if menu_choice == '1':
+        new_task()
+    elif menu_choice == '2':
+        remove_task()
+    elif menu_choice == '3':
+        finished_task()
+    elif menu_choice == '4':
+        not_finished_task()
+    elif menu_choice == '5':
+        exit()
+
+    
