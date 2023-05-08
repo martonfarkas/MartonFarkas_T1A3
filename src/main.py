@@ -1,4 +1,5 @@
 from colorama import Fore
+from tabulate import tabulate
 from datetime import date
 
 todo_list = {}
@@ -10,12 +11,12 @@ no_tasks = False
 
 def view_tasks():
     print('Number of tasks: ' + str(len(todo_list)))
-    print(Fore.GREEN + 'Number of finished tasks: ' + str(len(finished_tasks)))
-    print(Fore.RED + 'Number of unfinished tasks: ' + str(len(not_finished_tasks)))
-    print(Fore.RESET)
+    # print(Fore.GREEN + 'Number of finished tasks: ' + str(len(finished_tasks)))
+    # print(Fore.RED + 'Number of unfinished tasks: ' + str(len(not_finished_tasks)))
+    # print(Fore.RESET)
     print('** [TASKS] **')
-    print(f'Unfinished tasks: {not_finished_tasks}')
-    print(f'Finished tasks: {finished_tasks}')
+    # print(f'Unfinished tasks: {not_finished_tasks}')
+    # print(f'Finished tasks: {finished_tasks}')
 
     for n, i in enumerate(todo_list):
         if todo_list[i] == '[\u2713]':
@@ -25,7 +26,8 @@ def view_tasks():
     print('\n')
 
 def new_task():
-    print('** NEW TASK **')
+    print(Fore.BLUE + '** NEW TASK **')
+    print(Fore.RESET)
     while True:
         while True:
             new_task_name = input('Add new task or back to menu(q): ')
@@ -42,7 +44,8 @@ def new_task():
         not_finished_tasks.append(new_task_name.lower())
 
 def remove_task():
-    print('** REMOVE TASK **')
+    print(Fore.RED + '** REMOVE TASK **')
+    print(Fore.RESET)
     view_tasks()
     if len(todo_list) == 0:
         print('There is no task to remove')
@@ -65,7 +68,8 @@ def remove_task():
                 pass
 
 def finished_task():
-    print('** FINISHED TASK **')
+    print(Fore.GREEN + '** FINISHED TASK **')
+    print(Fore.RESET)
     view_tasks()
     while True:
         while True:
@@ -98,7 +102,8 @@ def finished_task():
             pass
 
 def not_finished_task():
-    print('** UNFINISHED TASK **')
+    print(Fore.YELLOW + '** UNFINISHED TASK **')
+    print(Fore.RESET)
     view_tasks()
     while True:
         while True:
