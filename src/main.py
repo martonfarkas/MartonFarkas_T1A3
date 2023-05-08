@@ -118,4 +118,13 @@ def not_finished_task():
                 print("Can't find task. Try again!")
                 pass
 
-        
+        if no_task == False:
+            try:
+                todo_list[task_to_unfinished] = '[X]'
+                finished_tasks.remove(task_to_unfinished)
+                not_finished_tasks.append(task_to_unfinished)
+                print('Task uncompleted')
+            except:
+                print('You already uncompleted this task!')
+        else:
+            pass
