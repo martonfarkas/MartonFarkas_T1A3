@@ -151,4 +151,9 @@ def menu():
     elif menu_choice == '5':
         exit()
 
+    while True:
+        menu()
+
+
+menu()
     
