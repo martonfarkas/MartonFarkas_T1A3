@@ -1,5 +1,6 @@
 from colorama import Fore
 from tabulate import tabulate
+import csv
 from datetime import date
 
 todo_list = {}
@@ -11,12 +12,12 @@ no_tasks = False
 
 def view_tasks():
     print('Number of tasks: ' + str(len(todo_list)))
-    # print(Fore.GREEN + 'Number of finished tasks: ' + str(len(finished_tasks)))
-    # print(Fore.RED + 'Number of unfinished tasks: ' + str(len(not_finished_tasks)))
-    # print(Fore.RESET)
+    print(Fore.GREEN + 'Number of finished tasks: ' + str(len(finished_tasks)))
+    print(Fore.RED + 'Number of unfinished tasks: ' + str(len(not_finished_tasks)))
+    print(Fore.RESET)
     print('** [TASKS] **')
-    # print(f'Unfinished tasks: {not_finished_tasks}')
-    # print(f'Finished tasks: {finished_tasks}')
+    print(f'Unfinished tasks: {not_finished_tasks}')
+    print(f'Finished tasks: {finished_tasks}')
 
     for n, i in enumerate(todo_list):
         if todo_list[i] == '[\u2713]':
@@ -24,6 +25,14 @@ def view_tasks():
         elif todo_list[i] == '[X]':
             print(str(n + 1) + ') ' + todo_list[i] + ' ' + i)
     print('\n')
+
+    tasks = []
+    for task, status in todo_list.items():
+        tasks.append([status, task])
+
+    headers = ["Status", "Task"]
+
+    print(tabulate(tasks, headers=headers, tablefmt="fancy_grid"))
 
 def new_task():
     print(Fore.BLUE + '** NEW TASK **')
