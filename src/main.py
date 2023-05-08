@@ -95,3 +95,15 @@ def finished_task():
                 print('This task already finished!')
         else:
             pass
+
+def not_finished_task():
+    print('** UNFINISHED TASK **')
+    view_tasks()
+    while True:
+        while True:
+            if len(todo_list) == 0:
+                print('You have no task')
+                no_task = True
+                break
+            else:
+                no_task = False
