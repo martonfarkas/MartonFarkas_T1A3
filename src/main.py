@@ -12,8 +12,8 @@ def view_tasks():
     print('Number of tasks: ' + str(len(todo_list)))
     print(Fore.GREEN + 'Number of finished tasks: ' + str(len(finished_tasks)))
     print(Fore.RED + 'Number of unfinished tasks: ' + str(len(not_finished_tasks)))
-    print('** [TASKS] **')
     print(Fore.RESET)
+    print('** [TASKS] **')
     print(f'Unfinished tasks: {not_finished_tasks}')
     print(f'Finished tasks: {finished_tasks}')
 
@@ -46,11 +46,12 @@ def remove_task():
     view_tasks()
     if len(todo_list) == 0:
         print('There is no task to remove')
+        menu()
     while True:
         while True:
             remove_task_name = input('Which task would you like to remove? or back to menu(q): ')
             if remove_task_name == 'q':
-                pass
+                menu()
             elif remove_task_name in todo_list:
                 del todo_list[remove_task_name]
                 print('Task removed')
@@ -80,7 +81,7 @@ def finished_task():
             if task_to_finish in todo_list:
                 break
             elif task_to_finish == 'q':
-                pass
+                menu()
             else:
                 print("Can't find it. Check correct task name")
                 pass
@@ -113,7 +114,7 @@ def not_finished_task():
             if task_to_unfinished in todo_list:
                 break
             elif task_to_unfinished == 'q':
-                pass
+                menu()
             else:
                 print("Can't find task. Try again!")
                 pass
@@ -156,4 +157,3 @@ def menu():
 
 
 menu()
-    
