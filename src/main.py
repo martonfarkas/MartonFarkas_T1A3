@@ -107,3 +107,15 @@ def not_finished_task():
                 break
             else:
                 no_task = False
+
+            task_to_unfinished = input('Which task have you not finished? or back to menu(q): ')
+
+            if task_to_unfinished in todo_list:
+                break
+            elif task_to_unfinished == 'q':
+                pass
+            else:
+                print("Can't find task. Try again!")
+                pass
+
+        
