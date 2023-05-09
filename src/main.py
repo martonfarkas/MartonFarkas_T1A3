@@ -1,8 +1,7 @@
 from colorama import Fore
 from tabulate import tabulate
 import csv
-import os
-from datetime import date
+from datetime import datetime
 
 todo_list = {}
 
@@ -28,8 +27,8 @@ def view_tasks():
     print('\n')
 
     with open('tasks.csv', 'w') as f:
-        for task in todo_list:
-            f.write(task + ',' + todo_list[task] + '\n')
+        writer = csv.writer(f)
+        writer.writerow(["Task", "Status", "Date Created"])
 
     tasks = []
     for task, status in todo_list.items():
