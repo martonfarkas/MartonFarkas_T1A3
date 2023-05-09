@@ -8,7 +8,7 @@ todo_list = {}
 finished_tasks = []
 not_finished_tasks = []
 
-no_tasks = False
+# no_tasks = False
 
 def view_tasks():
     print('Number of tasks: ' + str(len(todo_list)))
@@ -32,7 +32,10 @@ def view_tasks():
         for task, status in todo_list.items():
             created_date = datetime.now().strftime("%Y-%m-%d")
             writer.writerow([task, status, created_date])
+    
+    display()
 
+def display():
     tasks = []
     for task, status in todo_list.items():
         tasks.append([status, task])
