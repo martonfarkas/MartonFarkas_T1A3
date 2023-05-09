@@ -83,40 +83,36 @@ def remove_task():
                 print("Can't find this task. Did you typed correctly?")
                 pass
 
+def check_empty_tasks():
+    if len(todo_list) == 0:
+        print('You have no task')
+        menu()
+        return True
+    return False
+
 def finished_task():
     print(Fore.GREEN + '** FINISHED TASK **')
     print(Fore.RESET)
     view_tasks()
+    if check_empty_tasks():
+        return
     while True:
         while True:
-            if len(todo_list) == 0:
-                print('You have no task')
-                menu()
-                no_tasks = True
-                break
-            else:
-                no_tasks = False
-
             task_to_finish = input('Which task have you finished? or back to menu(q): ')
-
             if task_to_finish in todo_list:
                 break
             elif task_to_finish == 'q':
                 menu()
             else:
                 print("Can't find it. Check correct task name")
-                pass
 
-        if no_tasks == False:
-            try:
-                todo_list[task_to_finish] = '[\u2713]'
-                not_finished_tasks.remove(task_to_finish)
-                finished_tasks.append(task_to_finish)
-                print('Task finished!')
-            except:
-                print('This task already finished!')
-        else:
-            pass
+        try:
+            todo_list[task_to_finish] = '[\u2713]'
+            not_finished_tasks.remove(task_to_finish)
+            finished_tasks.append(task_to_finish)
+            print('Task finished!')
+        except:
+            print('This task already finished!')
 
 def not_finished_task():
     print(Fore.YELLOW + '** UNFINISHED TASK **')
