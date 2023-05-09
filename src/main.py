@@ -118,36 +118,25 @@ def not_finished_task():
     print(Fore.YELLOW + '** UNFINISHED TASK **')
     print(Fore.RESET)
     view_tasks()
+    if check_empty_tasks():
+        return
     while True:
         while True:
-            if len(todo_list) == 0:
-                print('You have no task')
-                menu()
-                no_task = True
-                break
-            else:
-                no_task = False
-
             task_to_unfinished = input('Which task have you not finished? or back to menu(q): ')
-
             if task_to_unfinished in todo_list:
                 break
             elif task_to_unfinished == 'q':
                 menu()
             else:
                 print("Can't find task. Try again!")
-                pass
 
-        if no_task == False:
-            try:
-                todo_list[task_to_unfinished] = '[X]'
-                finished_tasks.remove(task_to_unfinished)
-                not_finished_tasks.append(task_to_unfinished)
-                print('Task uncompleted')
-            except:
-                print('You already uncompleted this task!')
-        else:
-            pass
+        try:
+            todo_list[task_to_unfinished] = '[X]'
+            finished_tasks.remove(task_to_unfinished)
+            not_finished_tasks.append(task_to_unfinished)
+            print('Task uncompleted')
+        except:
+            print('You already uncompleted this task!')
 
 def menu():
     view_tasks()
