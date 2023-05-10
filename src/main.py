@@ -8,7 +8,6 @@ todo_list = {}
 finished_tasks = []
 not_finished_tasks = []
 
-# no_tasks = False
 
 def view_tasks():
     print('Number of tasks: ' + str(len(todo_list)))
@@ -26,14 +25,16 @@ def view_tasks():
             print(str(n + 1) + ') ' + todo_list[i] + ' ' + i)
     print('\n')
 
-    with open('tasks.csv', 'w', newline='') as f:
+    display()
+    open_file()
+
+def open_file():    
+    with open('tasks.csv', 'a', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(["Task", "Status", "Date Created"])
         for task, status in todo_list.items():
             created_date = datetime.now().strftime("%Y-%m-%d")
             writer.writerow([task, status, created_date])
-    
-    display()
 
 def display():
     tasks = []
