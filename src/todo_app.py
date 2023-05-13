@@ -1,5 +1,6 @@
 from colorama import Fore
 from tabulate import tabulate
+
 import csv
 from datetime import datetime
 
@@ -8,7 +9,7 @@ todo_list = {}
 finished_tasks = []
 not_finished_tasks = []
 
-
+# Display tasks and their statuses
 def view_tasks():
     print('Number of tasks: ' + str(len(todo_list)))
     print(Fore.GREEN + 'Number of finished tasks: ' + str(len(finished_tasks)))
@@ -28,6 +29,7 @@ def view_tasks():
     display()
     open_file()
 
+# Open csv file and save tasks
 def open_file():    
     with open('tasks.csv', 'a', newline='') as f:
         writer = csv.writer(f)
@@ -36,6 +38,7 @@ def open_file():
             created_date = datetime.now().strftime("%Y-%m-%d")
             writer.writerow([task, status, created_date])
 
+# Display tasks and status in a table
 def display():
     tasks = []
     for task, status in todo_list.items():
@@ -45,6 +48,7 @@ def display():
 
     print(tabulate(tasks, headers=headers, tablefmt="fancy_grid"))
 
+# Check if task exist if not it adds it to the unfinished tasks
 def new_task():
     print(Fore.BLUE + '** NEW TASK **')
     print(Fore.RESET)
@@ -63,6 +67,7 @@ def new_task():
         print('New task added to list!')
         not_finished_tasks.append(new_task_name.lower())
 
+# Remove task from todo_list
 def remove_task():
     print(Fore.RED + '** REMOVE TASK **')
     print(Fore.RESET)
@@ -87,6 +92,8 @@ def remove_task():
                 print("Can't find this task. Did you typed correctly?")
                 pass
 
+
+# Check if todo_list empty
 def check_empty_tasks(todo_list):
 
     if len(todo_list) == 0:
@@ -94,7 +101,7 @@ def check_empty_tasks(todo_list):
         return True
     return False
 
-
+# Mark task as finished
 def finished_task():
     print(Fore.GREEN + '** FINISHED TASK **')
     print(Fore.RESET)
@@ -119,6 +126,7 @@ def finished_task():
         except:
             print('This task already finished!')
 
+# Mark task as unfinished
 def not_finished_task():
     print(Fore.YELLOW + '** UNFINISHED TASK **')
     print(Fore.RESET)
@@ -143,21 +151,21 @@ def not_finished_task():
         except:
             print('You already uncompleted this task!')
 
+# Display the menu and handle input
 def menu():
-    view_tasks()
-    print('\n', Fore.BLUE + '(1) Add Task\n', Fore.RED + '(2) Remove Task\n', Fore.GREEN + '(3) Finished Task\n', Fore.YELLOW + '(4) Un-finished Task\n', Fore.RESET + '(5) Exit\n')
-
-    menu_choice = input('')
-    if menu_choice == '1':
-        new_task()
-    elif menu_choice == '2':
-        remove_task()
-    elif menu_choice == '3':
-        finished_task()
-    elif menu_choice == '4':
-        not_finished_task()
-    elif menu_choice == '5':
-        exit()
-
     while True:
-        menu()
+        view_tasks()
+        print('\n', Fore.BLUE + '(1) Add Task\n', Fore.RED + '(2) Remove Task\n', Fore.GREEN + '(3) Finished Task\n', Fore.YELLOW + '(4) Un-finished Task\n', Fore.RESET + '(5) Exit\n')
+
+        menu_choice = input('')
+        if menu_choice == '1':
+            new_task()
+        elif menu_choice == '2':
+            remove_task()
+            return
+        elif menu_choice == '3':
+            finished_task()
+        elif menu_choice == '4':
+            not_finished_task()
+        elif menu_choice == '5':
+            exit()
