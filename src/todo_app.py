@@ -38,6 +38,7 @@ def open_file():
             created_date = datetime.now().strftime("%Y-%m-%d")
             writer.writerow([task, status, created_date])
 
+
 # Display tasks and status in a table
 def display():
     tasks = []
