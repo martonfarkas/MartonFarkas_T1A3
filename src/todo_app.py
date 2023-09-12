@@ -1,15 +1,14 @@
 from colorama import Fore
 from tabulate import tabulate
-
-import csv
+import json
 from datetime import datetime
 
-todo_list = {}
+# Define dictionaries to store tasks
+todo_list = {}           # Stores tasks with their status and due date
+finished_tasks = []      # Stores the names of finished tasks
+not_finished_tasks = []  # Stores the names of unfinished tasks
 
-finished_tasks = []
-not_finished_tasks = []
-
-# Display tasks and their statuses
+# Function to display tasks and their statuses
 def view_tasks():
     print('Number of tasks: ' + str(len(todo_list)))
     print(Fore.GREEN + 'Number of finished tasks: ' + str(len(finished_tasks)))
@@ -19,56 +18,86 @@ def view_tasks():
     print(f'Unfinished tasks: {not_finished_tasks}')
     print(f'Finished tasks: {finished_tasks}')
 
-    for n, i in enumerate(todo_list):
-        if todo_list[i] == '[\u2713]':
-            print(str(n + 1) + ') ' + todo_list[i] + ' ' + i)
-        elif todo_list[i] == '[X]':
-            print(str(n + 1) + ') ' + todo_list[i] + ' ' + i)
+    for n, (task_name, task_details) in enumerate(todo_list.items()):
+        status = task_details['status']
+        if status == '[\u2713]':
+            print(str(n + 1) + ') ' + status + ' ' + task_name + f' (Due: {task_details["due_date"]})')
+        elif status == '[X]':
+            print(str(n + 1) + ') ' + status + ' ' + task_name + f' (Due: {task_details["due_date"]})')
     print('\n')
 
     display()
-    open_file()
+    save_tasks_to_json()
 
-# Open csv file and save tasks
-def open_file():    
-    with open('tasks.csv', 'a', newline='') as f:
-        writer = csv.writer(f)
-        writer.writerow(["Task", "Status", "Date Created"])
-        for task, status in todo_list.items():
-            created_date = datetime.now().strftime("%Y-%m-%d")
-            writer.writerow([task, status, created_date])
+# Load tasks from a .json file if it exists
+try:
+    with open('tasks.json', 'r') as json_file:
+        data = json.load(json_file)
+        todo_list = data.get('todo_list', {})
+        finished_tasks = data.get('finished_tasks', [])
+        not_finished_tasks = data.get('not_finished_tasks', [])
+except FileNotFoundError:
+    todo_list = {}
+    finished_tasks = []
+    not_finished_tasks = []
 
+# Save tasks into the .json file
+def save_tasks_to_json():
+    data = {
+        'todo_list': todo_list,
+        'finished_tasks': finished_tasks,
+        'not_finished_tasks': not_finished_tasks,
+    }
+    with open('tasks.json', 'w') as json_file:
+        json.dump(data, json_file, indent=4)
 
 # Display tasks and status in a table
 def display():
     tasks = []
-    for task, status in todo_list.items():
-        tasks.append([status, task])
+    for task_name, task_details in todo_list.items():
+        status = task_details['status']
+        tasks.append([status, task_name])
 
     headers = ["Status", "Task"]
 
     print(tabulate(tasks, headers=headers, tablefmt="fancy_grid"))
 
-# Check if task exist if not it adds it to the unfinished tasks
+# Function to add a new task with a due date
 def new_task():
     print(Fore.BLUE + '** NEW TASK **')
     print(Fore.RESET)
     while True:
         while True:
-            new_task_name = input('Add new task or back to menu(q): ')
+            new_task_name = input('Add new task or back to the menu(q): ')
             if new_task_name.lower() in todo_list:
-                print('This name already in use!')
+                print('This name is already in use!')
                 pass
             elif new_task_name == 'q':
                 return
             else:
                 break
 
-        todo_list[new_task_name.lower()] = '[X]'
-        print('New task added to list!')
-        not_finished_tasks.append(new_task_name.lower())
+        # Prompt the user for a due date
+        while True:
+            due_date_input = input('Enter the due date (YYYY-MM-DD) or leave empty: ')
+            if not due_date_input:
+                due_date = 'Not set'  # If the user leaves it empty, set it to 'Not set'
+                break
+            try:
+                due_date = datetime.strptime(due_date_input, '%Y-%m-%d').strftime('%Y-%m-%d')
+                break
+            except ValueError:
+                print('Invalid date format. Please use YYYY-MM-DD or leave it empty.')
 
-# Remove task from todo_list
+        todo_list[new_task_name.lower()] = {
+            'status': '[X]',
+            'due_date': due_date,  # Include the due date in the task details
+        }
+
+        not_finished_tasks.append(new_task_name.lower())
+        print('New task added to the list!')
+
+ # Remove task from todo_list
 def remove_task():
     print(Fore.RED + '** REMOVE TASK **')
     print(Fore.RESET)
@@ -120,7 +149,8 @@ def finished_task():
                 print("Can't find it. Check correct task name")
 
         try:
-            todo_list[task_to_finish] = '[\u2713]'
+            # Mark the task as finished by updating the status
+            todo_list[task_to_finish]['status'] = '[\u2713]'
             not_finished_tasks.remove(task_to_finish)
             finished_tasks.append(task_to_finish)
             print('Task finished!')
@@ -145,7 +175,8 @@ def not_finished_task():
                 print("Can't find task. Try again!")
 
         try:
-            todo_list[task_to_unfinished] = '[X]'
+            # Mark the task as unfinished by updating the status
+            todo_list[task_to_unfinished]['status'] = '[X]'
             finished_tasks.remove(task_to_unfinished)
             not_finished_tasks.append(task_to_unfinished)
             print('Task uncompleted')
